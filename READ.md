@@ -65,18 +65,14 @@ This guide is for developers aiming to build or onboard Beckn-enabled BAPs/BPPs 
     
 
 **Mermaid Diagram: BAP ↔ BPP Communication**
+
 ```mermaid
-graph LR
-    BAP[Farmer App (BAP)] <--> Gateway[Beckn Gateway]
-    Gateway <--> BPP[Soil Testing Provider (BPP)]
-    style BAP fill:#f9f,stroke:#333,stroke-width:2px
-    style BPP fill:#bbf,stroke:#333,stroke-width:2px
-    style Gateway fill:#dfd,stroke:#333,stroke-width:2px
+graph TD
+  A[Farmer via BAP] -->|search| BPP1[Krishi Kendra Soil Services]
+  A -->|select/init/confirm| BPP1
+  BPP1 -->|status/report| A
+  A -->|rating/support| BPP1
 ```
-
-Or alternatively:
-
-![BAP-BPP Communication Diagram](./public/a.png)
 
 ---
 
@@ -309,9 +305,6 @@ graph TD
 ---
 
 ## References
-
 - [Beckn Protocol Documentation](https://becknprotocol.io/)
-    
 - [Unified Krishi Interface (UKI)](https://uki.network/)
-    
 - [Beckn Protocol GitHub](https://github.com/beckn/beckn-protocol-specs)
