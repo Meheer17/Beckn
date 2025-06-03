@@ -344,3 +344,348 @@ graph LR
     D3[support] --> D4[on_support]
   end
 ```
+
+## 7. Taxonomy & Tags
+
+### 7.1 Collection Types
+- **farm_pickup**: Provider sends qualified personnel to collect soil samples directly from the farm
+- **centre_dropoff**: Farmer collects samples and delivers to a testing center
+- **mobile_lab**: On-site testing using portable equipment (limited parameters)
+- **kiosk_collection**: Self-service collection points in agricultural centers
+
+### 7.2 Test Parameters
+- **npk**: Macro-nutrients (Nitrogen, Phosphorus, Potassium) essential for basic crop growth
+- **ph**: Soil acidity/alkalinity determining nutrient availability
+- **oc**: Organic Carbon indicating soil health and microbial activity
+- **ec**: Electrical Conductivity measuring salinity levels
+- **micronutrients**: Secondary nutrients (Zn, Fe, Mn, Cu, B) required in smaller quantities
+- **soil_texture**: Physical composition (sand, silt, clay percentages)
+- **water_retention**: Soil's capacity to hold water for plant use
+- **cec**: Cation Exchange Capacity indicating nutrient holding ability
+- **biological_activity**: Assessment of beneficial microorganism population
+
+### 7.3 Payment Methods
+- **COD**: Cash on Delivery for farm pickup or at center dropoff
+- **UPI**: Digital payments through Unified Payments Interface
+- **Card**: Credit/Debit card payments
+- **Wallet**: Digital wallet payments
+- **Bank_Transfer**: Direct bank transfers
+- **Subsidy_Voucher**: Government-issued testing subsidies
+
+### 7.4 Order Status Taxonomy
+- **Pending**: Order received but not yet confirmed
+- **Confirmed**: Order accepted and scheduled
+- **Agent_Assigned**: Collection personnel allocated (for farm pickup)
+- **En_Route**: Agent traveling to collection location
+- **Sample_Collected**: Soil samples obtained and in transit to lab
+- **Received_At_Lab**: Samples arrived at testing facility
+- **Testing_In_Progress**: Laboratory analysis underway
+- **Quality_Check**: Results undergoing verification
+- **Report_Ready**: Analysis complete and report available
+- **Delivered**: Report successfully provided to farmer
+- **Cancelled**: Order terminated before fulfillment
+- **Disputed**: Results questioned or retest requested
+
+### 7.5 Rating Metrics
+- **service_quality**: Overall quality of testing service
+- **provider_behavior**: Professionalism of collection agent or center staff
+- **timeliness**: Adherence to scheduled timings
+- **report_clarity**: Comprehensibility of test results and recommendations
+- **value_for_money**: Perceived value relative to cost
+- **support**: Quality of assistance for questions or issues
+- **recommendation_usefulness**: Practicality of provided crop recommendations
+
+### 7.6 Farm Information Tags
+- **crop_history**: Previous crops grown in the field
+- **irrigation_type**: Method of water application
+- **farming_practice**: Conventional, organic, natural farming, etc.
+- **soil_issues**: Known problems like waterlogging, erosion, compaction
+- **topography**: Land slope and elevation characteristics
+
+---
+
+## 8. Assumptions & Challenges
+
+### 8.1 Technical Assumptions
+
+- All BAPs/BPPs adhere to Beckn protocol 1.1+ specifications
+- Network infrastructure supports real-time API communications
+- Digital identity verification is available for field agents
+- GPS accuracy is sufficient in rural areas for precise location tagging
+- Network participants implement proper data security measures
+- Backend systems can handle seasonal demand fluctuations
+
+### 8.2 Operational Assumptions
+
+- Offline farmer interaction via agents is supported for low digital literacy
+- Collection logistics handled by providers or authorized agents
+- Standard operating procedures exist for sample collection
+- Testing methodologies follow accepted agricultural standards
+- Result interpretation guidelines are consistent across providers
+- Providers maintain adequate quality control measures
+
+### 8.3 Regulatory Assumptions
+
+- Service providers have necessary certifications for soil testing
+- Data sharing complies with relevant privacy regulations
+- Subsidy schemes can be digitally integrated with payment systems
+- Agricultural departments recognize digital soil health reports
+- Testing methodologies meet governmental standards
+
+### 8.4 Implementation Challenges
+
+- **Connectivity Issues**: Intermittent internet in rural areas affecting real-time updates
+- **Digital Literacy**: Varying levels of comfort with technology among farmers
+- **Last-Mile Logistics**: Reaching remote farms efficiently for sample collection
+- **Standardization**: Ensuring consistent testing methodologies across providers
+- **Language Barriers**: Supporting multiple regional languages for farmer interfaces
+- **Payment Integration**: Handling various payment methods including subsidy vouchers
+- **Seasonality**: Managing high demand during pre-sowing periods
+- **Data Integrity**: Ensuring accurate sample tagging and result association
+- **Result Interpretation**: Providing actionable insights from technical data
+- **Trust Building**: Establishing credibility of digital soil health reports
+
+### 8.5 Future Considerations
+
+- Integration with precision agriculture systems for automated recommendations
+- IoT-enabled soil sensors for continuous monitoring beyond point-in-time testing
+- Machine learning models for predictive soil health assessment
+- Blockchain for immutable record of soil quality over time
+- Carbon credit monitoring through soil organic matter tracking
+
+**Mermaid Diagram: Data Flow & Security Zones**
+
+```mermaid
+graph TD
+  F[Farmer Input] --> BAP
+  BAP -->|Encrypted| Network[Beckn Gateway]
+  Network -->|Secure API| BPP
+  BPP -->|Signed Report| BAP
+  BAP --> F
+```
+
+---
+
+## 9. Developer Notes
+
+### 9.1 Protocol Implementation Guidelines
+
+- Use Beckn protocol v1.1.0 or higher for all API implementations
+- Implement proper error handling with standardized error codes
+- All timestamps should follow ISO 8601 format (YYYY-MM-DDTHH:MM:SS+TZ)
+- Sign and validate payloads using Beckn signing policies (BLSC)
+- Implement retry and idempotency mechanisms for network resilience
+- Ensure backward compatibility where required
+- Cache appropriate responses to minimize network load
+- Implement rate limiting to prevent API abuse
+
+### 9.2 Security Best Practices
+
+- Use TLS 1.3 for all API communications
+- Implement proper authentication for all endpoints
+- Store sensitive farmer data with appropriate encryption
+- Use JWE for secure payload transmission when required
+- Implement proper role-based access control
+- Regular security audits and penetration testing
+- Follow OWASP security guidelines for APIs
+- Implement proper logging for security monitoring
+
+### 9.3 Performance Considerations
+
+- Optimize search queries for rapid response
+- Implement efficient caching strategies
+- Design for horizontal scalability
+- Set appropriate timeouts for synchronous operations
+- Use asynchronous processing for long-running tasks
+- Implement efficient database indexing strategies
+- Profile and optimize critical API paths
+- Plan for seasonal usage spikes
+
+### 9.4 Localization Support
+
+- Implement multilingual support for all user-facing content
+- Use Unicode for text handling
+- Support locale-specific date and number formats
+- Consider cultural nuances in UI/UX design
+- Provide region-specific agricultural terminology
+
+### 9.5 Sample Context Object
+
+```json
+{
+  "context": {
+    "domain": "beckn.org/agri-soil_testing",
+    "action": "search",
+    "core_version": "1.1.0",
+    "bap_id": "your-bap-id",
+    "bpp_id": "krishi-kendra-bpp",
+    "transaction_id": "txn-abc123",
+    "message_id": "msg-xyz789",
+    "timestamp": "2025-06-03T12:00:00Z",
+    "country": "IND",
+    "city": "std:080",
+    "ttl": "P1D",
+    "bap_uri": "https://yourbap.com/beckn",
+    "bpp_uri": "https://krishikendra.org/beckn"
+  }
+}
+```
+
+### 9.6 Sample Order Object
+
+```json
+{
+  "order": {
+    "order_id": "order-7890",
+    "provider_id": "krishi-kendra-1",
+    "service": "soil_testing",
+    "collection_type": "farm_pickup",
+    "scheduled_slot": "2025-06-06T09:00",
+    "customer_info": {
+      "name": "Smita",
+      "contact": "+919812345678",
+      "language_preference": "Marathi",
+      "location": {
+        "gps": "19.9975,73.7898",
+        "address": "Nashik, Maharashtra",
+        "plot_identifiers": {
+          "survey_number": "123/4B",
+          "khasra_number": "456-7"
+        }
+      }
+    },
+    "sample_details": {
+      "collection_depth": "15-30cm",
+      "sample_count": 5,
+      "plot_size": "2.5 acres",
+      "previous_crop": "Cotton",
+      "planned_crop": "Wheat"
+    },
+    "test_package": {
+      "id": "comprehensive",
+      "parameters": ["npk", "ph", "oc", "micronutrients", "texture"],
+      "additional_requests": "Please check for sodium content"
+    },
+    "payment": {
+      "type": "COD",
+      "amount": 350,
+      "subsidized_amount": 150,
+      "subsidy_scheme": "PM-KISAN"
+    },
+    "status": "Confirmed",
+    "created_at": "2025-06-01T14:30:45Z",
+    "updated_at": "2025-06-01T14:35:12Z"
+  }
+}
+```
+
+### 9.7 Sample Report Object
+
+```json
+{
+  "report": {
+    "report_id": "rpt-12345",
+    "order_id": "order-7890",
+    "lab_id": "lab-nashik-01",
+    "testing_date": "2025-06-10",
+    "sampling_location": {
+      "gps": "19.9975,73.7898",
+      "address": "Nashik, Maharashtra"
+    },
+    "results": {
+      "ph": {
+        "value": 6.8,
+        "unit": "pH",
+        "interpretation": "Slightly acidic",
+        "optimal_range": "6.5-7.5",
+        "recommendation": "No pH adjustment needed"
+      },
+      "nitrogen": {
+        "value": 280,
+        "unit": "kg/ha",
+        "interpretation": "Medium",
+        "optimal_range": "280-560",
+        "recommendation": "Apply 120 kg/ha of nitrogen"
+      },
+      "phosphorus": {
+        "value": 15,
+        "unit": "kg/ha",
+        "interpretation": "Low",
+        "optimal_range": "25-50",
+        "recommendation": "Apply 60 kg/ha of phosphorus"
+      },
+      "potassium": {
+        "value": 190,
+        "unit": "kg/ha",
+        "interpretation": "Medium",
+        "optimal_range": "150-250",
+        "recommendation": "Apply 40 kg/ha of potassium"
+      },
+      "organic_carbon": {
+        "value": 0.6,
+        "unit": "%",
+        "interpretation": "Medium",
+        "optimal_range": "0.5-0.75",
+        "recommendation": "Add organic manure @ 5 tons/ha"
+      }
+    },
+    "summary": {
+      "overall_soil_health": "Medium",
+      "recommendations": [
+        "Apply 120 kg/ha of nitrogen.",
+        "Apply 60 kg/ha of phosphorus.",
+        "Apply 40 kg/ha of potassium.",
+        "Add organic manure @ 5 tons/ha."
+      ],
+      "crop_suitability": [
+        "Wheat",
+        "Soybean"
+      ]
+    },
+    "delivered_at": "2025-06-12T10:30:00Z",
+    "delivered_to": "Smita"
+  }
+}
+```
+
+---
+
+## 10. Implementation Roadmap
+
+1. **Requirements Gathering**: Define the business and technical requirements for your BAP/BPP.
+2. **Protocol Familiarization**: Study the Beckn protocol and UKI Agri network guidelines.
+3. **Architecture Planning**: Design system architecture for scalability, security, and localization.
+4. **API Development**: Implement Beckn-compliant APIs for all network interactions.
+5. **Testing & Certification**: Thoroughly validate implementation and obtain necessary certifications.
+6. **Pilot Launch**: Onboard select farmers and providers for a controlled beta.
+7. **Feedback Loop**: Collect feedback, resolve issues, and iterate on features.
+8. **Network Expansion**: Expand coverage, integrate additional providers, and enhance feature set.
+
+---
+
+## 11. Compliance Requirements
+
+- Adhere to Beckn protocol v1.1.0 or higher.
+- Comply with local agricultural testing standards and certifications.
+- Ensure data privacy and protection as per Indian law and best practices.
+- Validate digital identity and ensure traceability in all transactions.
+- Maintain auditable logs for all service and report transactions for regulatory scrutiny.
+
+---
+
+## 12. Frequently Asked Questions
+
+**Q: Can any soil testing lab join this network?**  
+A: Yes, provided they meet the compliance standards and expose Beckn-compliant APIs.
+
+**Q: What languages are supported for farmer interfaces?**  
+A: Multilingual support is recommended. All UI content and notifications should be localized to farmer’s preferred language.
+
+**Q: What about offline farmers?**  
+A: Offline workflows are supported through field agents who interact with the digital platform on the farmer’s behalf.
+
+**Q: How is payment handled?**  
+A: Multiple payment options are supported, including cash, UPI, cards, and subsidy vouchers.
+
+**Q: How is data privacy ensured?**  
+A: All personal and farm data is encrypted and governed by strict access controls as per protocol guidelines.
