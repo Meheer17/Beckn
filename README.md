@@ -112,16 +112,16 @@ graph TD
 
 ## 4. Soil Testing Journey (DOFP)
 
-### Use Case Visualization: Ravi's Soil Testing Journey
+### Use Case Visualization: Smita's Soil Testing Journey
 
-Ravi, a cotton farmer from Wardha, Maharashtra, notices declining yields and uses a UKI-enabled app to find soil testing services. He searches by location, test type, collection method, and budget. The app shows multiple providers including AgriLab Solutions, SoilCare Labs, and FarmTest Services. Ravi selects SoilCare Labs for comprehensive testing with home pickup, providing his details and farm location. After confirmation, collection agent Rajesh arrives the next day to collect samples following proper protocols. Ravi receives updates throughout the process and eventually gets a detailed digital report with nutrient status, deficiency analysis, fertilizer recommendations, and crop suggestions. He then rates the service and can access advisory support for implementing recommendations.
+Smita, a farmer from Nashik, wants to test her soil quality to plan for agricultural inputs and select the right crops to maximize yield. She uses a UKI-enabled app to find soil testing services. She searches by location, rating, experience of service provider, cost, available dates, and collection method (pickup from farm or deliver to testing center). The app shows multiple providers including their ratings and experience. Smita selects Krishi Kendra Soil Services, which responds with available time slots, pricing based on collection type, soil preparation instructions (via video, image, audio, or PDF), and terms and conditions. After reviewing, Smita confirms the order, choosing cash on delivery as her payment method. For farm pickup, a collection agent arrives at the scheduled time, collects the samples, and Smita pays by cash. Alternatively, she could collect samples herself following the provided instructions and deliver them to the testing center. Throughout the process, Smita receives status updates, and finally gets a detailed digital report with nutrient analysis and recommendations. She then rates the service based on quality, provider behavior, and support experience.
 
 ### 4.1. Discovery
 
 - When a farmer needs soil testing, their app (BAP) sends a `search` request to find available services
 - The search includes important details like:
   - The farmer's exact location
-  - What kind of soil tests they need
+  - What kind of soil tests they need (NPK, Secondary Nutrients, Micronutrients, etc.)
   - How they want samples collected (pickup from farm or drop-off at a center)
 - Testing providers (BPPs) respond with complete information:
   - Different testing packages (from basic NPK tests to comprehensive analysis)
@@ -131,16 +131,22 @@ Ravi, a cotton farmer from Wardha, Maharashtra, notices declining yields and use
   - How long it will take to get results (turnaround time)
   - Additional services like personalized recommendations
   - Credentials showing they're qualified and certified
+  - Ratings and experience of the service provider
 
 ### 4.2. Order
 
 - The farmer reviews all available options and chooses a provider based on what matters most to them (price, convenience, reputation, etc.)
+- The service provider shares additional details:
+  - Available time slots for service
+  - Exact pricing based on collection method
+  - Prerequisites for sample collection (soil preparation steps)
+  - Terms and conditions including cancellations and refunds
 - The farmer then provides specific details:
   - Whether they want someone to come collect samples or they'll drop them off
   - Exactly which fields or plots need testing (with locations for multiple areas)
   - When they'd prefer the collection to happen
-  - What crops they plan to grow (so recommendations can be tailored)
-  - How they want to pay and any subsidy programs they qualify for
+  - Optional crop information (current and previous crops, varieties, yields)
+  - How they want to pay (cash on delivery, digital payment, etc.)
 - The app follows a three-step process to confirm the order:
   - `select`: Checks final availability and confirms exact pricing
   - `init`: Begins the booking process and sets up payment
@@ -151,38 +157,39 @@ Ravi, a cotton farmer from Wardha, Maharashtra, notices declining yields and use
 - **When the Provider Collects Samples from the Farm**:
   - The testing lab assigns a qualified technician to visit the farm
   - The technician receives detailed information about the farm location and specific needs
+  - The farmer receives status updates on the day of service delivery
   - Upon arrival, the technician shows ID to confirm they're official
-  - Samples are collected following scientific protocols (proper depth, multiple samples mixed, GPS-tagged locations)
-  - The farmer receives a detailed receipt and way to track their samples
-  - Samples are carefully transported to the lab with proper handling
+  - Samples are collected following scientific protocols
+  - The farmer pays by cash (or chosen payment method)
+  - Samples are carefully transported to the lab for testing
 
 - **When the Farmer Brings Samples to a Collection Center**:
   - The farmer receives clear instructions and proper containers for collecting samples
   - Step-by-step guidance helps them take samples correctly
-  - The farmer brings samples to the nearest collection center
-  - Staff verify the samples and provide a tracking receipt
+  - The farmer brings samples to the testing center
+  - Staff verify the samples and the farmer pays by cash
+  - A tracking receipt is provided
 
 - **Inside the Testing Laboratory**:
-  - Samples go through preparation (drying, grinding, sieving) to ensure accurate testing
-  - Lab technicians conduct the requested tests using standardized scientific methods
+  - Samples go through preparation and analysis using standardized methods
+  - Tests are conducted for requested parameters (NPK, Secondary Nutrients, Micronutrients, etc.)
   - Quality checks verify the accuracy of results
-  - Experts review the results to confirm they make sense
-  - A comprehensive report is created with all test values and what they mean
-
-- Throughout this process, the farmer receives updates through their app about where their samples are and what's happening
+  - The farmer receives updates throughout the testing process
+  - A comprehensive report is created with all test values, interpretations, and recommendations
 
 ### 4.4. Post-Fulfillment
 
-- Once testing is complete, the farmer receives a comprehensive report through their app that includes:
-  - Clear presentation of all test results with normal ranges clearly marked
+- Once testing is complete, the farmer receives a comprehensive report that includes:
+  - Clear presentation of all test results (NPK, pH, OC, EC, micronutrients, etc.)
   - Visual charts and graphs making it easy to understand soil health
   - Specific recommendations for fertilizers and soil treatments
   - Suggestions for which crops would grow best in their soil
-  - Comparison with previous tests if available to show trends
-- Farmers can ask questions if anything in the report is unclear
-- They can rate the service quality to help other farmers
-- If there are problems, they can file a formal complaint
-- They may be offered additional services like fertilizer delivery or follow-up testing
+  - Additional materials like videos or PDFs explaining the interventions
+- The farmer can rate the service on multiple aspects:
+  - Product/service quality
+  - Service provider (timeliness, professionalism)
+  - Support quality
+- If there are problems, they can reach out to support services
 
 **Mermaid Diagram: DOFP Flow**
 
@@ -226,8 +233,8 @@ search → on_search → select → on_select → init → on_init → confirm �
         "code": "IND"
       },
       "city": {
-        "name": "Wardha",
-        "code": "std:07152"
+        "name": "Nashik",
+        "code": "std:0253"
       }
     },
     "version": "1.1.0",
@@ -246,7 +253,7 @@ search → on_search → select → on_select → init → on_init → confirm �
       },
       "item": {
         "descriptor": {
-          "name": "NPK soil analysis"
+          "name": "Comprehensive Soil Analysis"
         },
         "tags": [
           {
@@ -256,25 +263,25 @@ search → on_search → select → on_select → init → on_init → confirm �
             "list": [
               {
                 "descriptor": {
-                  "code": "nitrogen"
+                  "code": "npk-test"
                 },
                 "value": "required"
               },
               {
                 "descriptor": {
-                  "code": "phosphorus"
+                  "code": "secondary-nutrients"
                 },
                 "value": "required"
               },
               {
                 "descriptor": {
-                  "code": "potassium"
+                  "code": "ph-ec-oc"
                 },
                 "value": "required"
               },
               {
                 "descriptor": {
-                  "code": "ph-level"
+                  "code": "micronutrients"
                 },
                 "value": "required"
               }
@@ -287,8 +294,8 @@ search → on_search → select → on_select → init → on_init → confirm �
           {
             "type": "collection-location",
             "location": {
-              "gps": "20.7489, 78.6085",
-              "address": "Village Karanja, Wardha District"
+              "gps": "20.0112, 73.7902",
+              "address": "Smita's Farm, Nashik District"
             }
           }
         ]
@@ -311,15 +318,15 @@ search → on_search → select → on_select → init → on_init → confirm �
         "code": "IND"
       },
       "city": {
-        "name": "Wardha",
-        "code": "std:07152"
+        "name": "Nashik",
+        "code": "std:0253"
       }
     },
     "version": "1.1.0",
     "bap_id": "farmer-app.uki.com",
     "bap_uri": "https://farmer-app.uki.com",
-    "bpp_id": "soil-lab-network.com",
-    "bpp_uri": "https://soil-lab-network.com",
+    "bpp_id": "krishi-kendra.com",
+    "bpp_uri": "https://krishi-kendra.com",
     "transaction_id": "soil-test-001",
     "message_id": "msg-001",
     "timestamp": "2025-06-02T19:07:25Z"
@@ -331,18 +338,33 @@ search → on_search → select → on_select → init → on_init → confirm �
       },
       "providers": [
         {
-          "id": "agrilab-solutions",
+          "id": "krishi-kendra-soil-services",
           "descriptor": {
-            "name": "AgriLab Solutions",
+            "name": "Krishi Kendra Soil Services",
             "short_desc": "NABL certified soil testing laboratory",
-            "long_desc": "Leading agricultural testing laboratory with 15 years experience in soil, water and plant analysis",
+            "long_desc": "Leading agricultural testing laboratory with expertise in soil analysis and crop recommendations",
             "images": [
               {
-                "url": "https://agrilab-solutions.com/logo.png"
+                "url": "https://krishi-kendra.com/logo.png"
               }
             ]
           },
-          "rating": "4.2",
+          "rating": "4.5",
+          "tags": [
+            {
+              "descriptor": {
+                "name": "experience"
+              },
+              "list": [
+                {
+                  "descriptor": {
+                    "name": "years_in_service"
+                  },
+                  "value": "12"
+                }
+              ]
+            }
+          ],
           "categories": [
             {
               "id": "c1",
@@ -355,23 +377,56 @@ search → on_search → select → on_select → init → on_init → confirm �
           "fulfillments": [
             {
               "id": "f1",
-              "type": "home-collection"
+              "type": "farm_pickup"
             },
             {
               "id": "f2",
-              "type": "drop-off"
+              "type": "centre_dropoff"
             }
           ],
           "items": [
             {
-              "id": "npk-micro-test",
+              "id": "npk-test",
               "descriptor": {
-                "name": "NPK + Micronutrients Analysis",
-                "short_desc": "Complete soil fertility analysis including macro and micro nutrients"
+                "name": "NPK Test - Primary Nutrient Test",
+                "short_desc": "Analysis of Nitrogen, Phosphorus, and Potassium levels"
               },
               "price": {
                 "currency": "INR",
-                "value": "500"
+                "value": "300"
+              }
+            },
+            {
+              "id": "comprehensive-test",
+              "descriptor": {
+                "name": "Comprehensive Soil Analysis",
+                "short_desc": "Complete soil fertility analysis including macro and micro nutrients, pH, EC, and OC"
+              },
+              "price": {
+                "currency": "INR",
+                "value": "650"
+              }
+            },
+            {
+              "id": "secondary-nutrients",
+              "descriptor": {
+                "name": "Secondary Nutrient Test",
+                "short_desc": "Analysis of Ca, Mg, and S levels"
+              },
+              "price": {
+                "currency": "INR",
+                "value": "250"
+              }
+            },
+            {
+              "id": "micronutrient-test",
+              "descriptor": {
+                "name": "Micronutrient Test",
+                "short_desc": "Analysis of Zn, B, Cu, Fe, Mo, and Mn levels"
+              },
+              "price": {
+                "currency": "INR",
+                "value": "400"
               }
             }
           ]
@@ -392,7 +447,7 @@ search → on_search → select → on_select → init → on_init → confirm �
     "action": "select",
     "version": "1.1.0",
     "bap_id": "farmer-app.uki.com",
-    "bpp_id": "soil-lab-network.com",
+    "bpp_id": "krishi-kendra.com",
     "transaction_id": "soil-test-001",
     "message_id": "msg-003",
     "timestamp": "2025-06-02T19:07:25Z"
@@ -400,11 +455,11 @@ search → on_search → select → on_select → init → on_init → confirm �
   "message": {
     "order": {
       "provider": {
-        "id": "soilcare-labs"
+        "id": "krishi-kendra-soil-services"
       },
       "items": [
         {
-          "id": "comprehensive-analysis",
+          "id": "comprehensive-test",
           "quantity": {
             "selected": {
               "count": 1
@@ -415,12 +470,13 @@ search → on_search → select → on_select → init → on_init → confirm �
       "fulfillments": [
         {
           "id": "f1",
+          "type": "farm_pickup",
           "stops": [
             {
               "type": "collection-location",
               "location": {
-                "gps": "20.7489, 78.6085",
-                "address": "Ravi Sharma Farm, Village Karanja, Wardha"
+                "gps": "20.0112, 73.7902",
+                "address": "Smita's Farm, Nashik District"
               },
               "time": {
                 "range": {
@@ -530,15 +586,16 @@ graph TD
 - **kiosk_collection**: Self-service collection points in agricultural centers
 
 ### 7.2 Test Parameters
-- **npk**: Macro-nutrients (Nitrogen, Phosphorus, Potassium) essential for basic crop growth
-- **ph**: Soil acidity/alkalinity determining nutrient availability
-- **oc**: Organic Carbon indicating soil health and microbial activity
-- **ec**: Electrical Conductivity measuring salinity levels
-- **micronutrients**: Secondary nutrients (Zn, Fe, Mn, Cu, B) required in smaller quantities
+- **npk_test**: Primary Nutrients (Nitrogen, Phosphorus, Potassium) essential for basic crop growth
+- **secondary_nutrients**: Secondary nutrients (Ca, Mg, S) required for plant functions
+- **ph_ec_oc**: pH (acidity/alkalinity), EC (Electrical Conductivity), OC (Organic Carbon)
+- **micronutrients**: Trace elements (Zn, B, Cu, Fe, Mo, Mn) required in smaller quantities
 - **soil_texture**: Physical composition (sand, silt, clay percentages)
-- **water_retention**: Soil's capacity to hold water for plant use
+- **soil_moisture**: Water content measurement
+- **contaminants**: Tests for harmful substances in soil
 - **cec**: Cation Exchange Capacity indicating nutrient holding ability
-- **biological_activity**: Assessment of beneficial microorganism population
+- **water_test**: Analysis of irrigation water quality
+- **chemical_test**: Specialized chemical analyses
 
 ### 7.3 Payment Methods
 - **COD**: Cash on Delivery for farm pickup or at center dropoff
@@ -572,7 +629,12 @@ graph TD
 - **recommendation_usefulness**: Practicality of provided crop recommendations
 
 ### 7.6 Farm Information Tags
-- **crop_history**: Previous crops grown in the field
+- **crop_category**: Agriculture Crop / Forest Crop
+- **crop_type**: Categorization of crops
+- **crop**: Specific crop being grown
+- **crop_variety**: Specific variety of the crop
+- **previous_crop**: Previously grown crop in the same field
+- **previous_yield**: Harvest quantity from previous crop cycle
 - **irrigation_type**: Method of water application
 - **farming_practice**: Conventional, organic, natural farming, etc.
 - **soil_issues**: Known problems like waterlogging, erosion, compaction
